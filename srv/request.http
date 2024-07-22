@@ -1,0 +1,28 @@
+@server = http://localhost:4004
+
+@credentialsAdmin = Authorization: Basic NCOLMENA
+:
+
+
+##################
+PATCH {{server}}/processor/Passenger(CustomerID='000002',IsActiveEntity=true)
+Accept: application/json
+Content-Type: application/json
+
+{
+	"Status": "Accepted"
+}
+
+##################
+GET {{server}}/processor/Passenger(CustomerID='000002',IsActiveEntity=true)
+Accept: application/json
+Content-Type: application/json
+
+##################
+POST {{server}}/processor/Passenger
+Accept: application/json
+Content-Type: application/json
+
+{
+	"CustomerID":"000002"
+}

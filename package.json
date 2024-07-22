@@ -1,0 +1,48 @@
+{
+  "name": "devtoberfest2023",
+  "version": "0.0.1",
+  "license": "Apache-2.0",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^7",
+    "cli": "^1.0.1",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^1",
+    "@prettier/plugin-xml": "^3.2.1",
+    "@sap/cds-lsp": "^7.2.0",
+    "@sap/eslint-plugin-cds": "^2.6.3",
+    "@sap/ux-specification": "^1.120.14",
+    "cds-plugin-ui5": "^0.2.1",
+    "eslint": "^8.50.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3"
+  },
+  "scripts": {
+    "postinstall": "husky install || true",
+    "start": "cds-serve",
+    "lint": "eslint .",
+    "format": "prettier --write --ignore-unknown . && format-cds -f .",
+    "watch-maintainpassengers": "cds watch --open maintainpassengers/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-onlymain": "cds watch --open onlymain/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-onlymainjs": "cds watch --open onlymainjs/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix",
+    "*": "prettier --write --ignore-unknown",
+    "*cds": [
+      "cds lint",
+      "format-cds -f"
+    ]
+  },
+  "workspaces": [
+    "app/*"
+  ],
+  "sapux": [
+    "app/maintainpassengers",
+    "app/onlymain",
+    "app/onlymainjs"
+  ]
+}
