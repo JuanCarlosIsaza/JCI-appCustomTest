@@ -15,11 +15,5 @@
                 </macros:Table>
             </Panel>
         </content>
-        <footer>
-            <OverflowToolbar id="idToolbar1">
-                <ToolbarSpacer id="idToolbarSpacer1"/>
-                <Button id="idSaveAction" text="Save" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" tooltip="" iconDensityAware="false" press="onSavePress"/>
-            </OverflowToolbar>
-        </footer>
     </Page>
 </mvc:View>

@@ -41,64 +41,43 @@ sap.ui.define(
             //  onExit: function() {
             //
             //  }
-            onModelContextChange: function () {
-                debugger;
-                let that = this;
-                let context = this.getView().getBindingContext();
-                context.requestProperty("IsActiveEntity").then(function (isActiveEntity) {
-                    if (isActiveEntity !== undefined) {
-                        var uiModel = that.getView().getModel("ui");
-                        uiModel.setProperty("/isEditable", !isActiveEntity);
-                    }
-                });
-            },
             onMassAcceptAction: function () {
                 const oTable = this.getView().byId("table");
                 const aSelectedContexts = oTable.getSelectedContexts();
                 const oNewStatus = "Accepted";
 
-                // for (const oContext of aSelectedContexts) {
-                //     debugger;
-                //     this.getExtensionAPI().getEditFlow().editDocument(oContext);
-                //     // oContext.setProperty("Status", oNewStatus);
-                // }
-                // // oTable.refresh();
-                //********************************************************************* */
-                // for (const oContext of aSelectedContexts) {
-                //     debugger;
-                //     oContext.setProperty("Status", oNewStatus);
-                //     // this.getExtensionAPI().getEditFlow().saveDocument(oContext);
-                //     // this.getExtensionAPI().getEditFlow().updateDocument(oContext);
-                // }
-                //********************************************************************* */
                 debugger;
                 //********************************************************************* */
-                var oModel = this.getView().getModel();
-                var oEditFlow = this.getExtensionAPI().getEditFlow();
+                const oEditFlow = this.getExtensionAPI().getEditFlow();
 
-                // Crear una lista de promesas para manejar las actualizaciones
-                var aPromises = aSelectedContexts.map(function (oContext) {
+                const processContext = function (oContext) {
                     return oEditFlow.editDocument(oContext).then(function (oDraftContext) {
+                        debugger;
+                        console.log(oDraftContext);
                         if (oDraftContext && typeof oDraftContext.setProperty === "function") {
-                            oDraftContext.setProperty("Status", "NuevoValor");
-                            return oDraftContext;
+                            oDraftContext.setProperty("Status", oNewStatus);
+                            return oEditFlow.saveDocument(oDraftContext);
                         } else {
                             throw new Error("El contexto de borrador no es válido");
                         }
-                    }).then(function (oDraftContext) {
-                        return oEditFlow.saveDocument(oDraftContext); // Guardar y publicar el borrador
+                    });
+                };
+            
+                const processAllContexts = function (contexts) {
+                    if (contexts.length === 0) {
+                        sap.m.MessageToast.show("Actualización masiva realizada con éxito");
+                        return Promise.resolve();
+                    }
+                    const oContext = contexts.shift();
+                    return processContext(oContext).then(function () {
+                        return processAllContexts(contexts);
                     }).catch(function (error) {
-                        console.error("Error while editing the document: ", error);
+                        sap.m.MessageToast.show("Error en la actualización masiva: " + error.message);
                         throw error;
                     });
-                });
-
-                // Ejecutar todas las promesas y enviar las actualizaciones en un solo lote
-                Promise.all(aPromises).then(function () {
-                    sap.m.MessageToast.show("Actualización masiva realizada con éxito");
-                }).catch(function (error) {
-                    sap.m.MessageToast.show("Error en la actualización masiva: " + error.message);
-                });
+                };
+            
+                processAllContexts(aSelectedContexts.slice());
                 //********************************************************************** */
             },
             onActionAcceptSingles: async function (oEvent) {
@@ -108,32 +87,8 @@ sap.ui.define(
                 const oNewStatus = "Accepted";
                 let _Status = oEvent.getSource().data("Status");
             },
-            onSavePress: async function () {
-                debugger;
-                const oTable = this.getView().byId("table");
-                const aSelectedContexts = oTable.getSelectedContexts();
-                const oNewStatus = "Accepted";;
-
-                for (const oContext of aSelectedContexts) {
-                    debugger;
-                    // oContext.setProperty("Status", oNewStatus);
-                    await this.getExtensionAPI().getEditFlow().saveDocument(oContext);
-                    // await this.getExtensionAPI().getEditFlow().updateDocument(oContext);
-                }
-                oTable.refresh();
-            },
             onSelectionChange: function (oEvent) {
                 // debugger;
-                // const oTable = this.getView().byId("table");
-                // const aSelectedContexts = oTable.getSelectedContexts();                
-
-                // for (const oContext of aSelectedContexts) {
-                //     this.getExtensionAPI().getEditFlow().editDocument(oContext);
-                // }
-            },
-            onRowPress: function (oEvent) {
-                // debugger;
-
             }
         });
     }
