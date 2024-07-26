@@ -1,3 +1,6 @@
+# Copy for testing purposes.
+## Source: https://github.com/MariusFreitag/devtoberfest2023.
+
 # Devtoberfest 2023
 
 This repository contains the final result of the Devtoberfest 2023 session ["SAP Fiori elements and SAP Fiori tools: It's time to use TypeScript!"](https://groups.community.sap.com/t5/devtoberfest/sap-fiori-elements-and-sap-fiori-tools-it-s-time-to-use-typescript/ev-p/283518). Expect that there are small differences between this repository and the application built in the demo, as this reference was created beforehand.
