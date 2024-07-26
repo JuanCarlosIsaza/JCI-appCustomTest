@@ -41,13 +41,15 @@ sap.ui.define(
             //  onExit: function() {
             //
             //  }
+
+            /**
+             * Mass status update
+             */
             onMassAcceptAction: function () {
                 const oTable = this.getView().byId("table");
                 const aSelectedContexts = oTable.getSelectedContexts();
                 const oNewStatus = "Accepted";
-
                 debugger;
-                //********************************************************************* */
                 const oEditFlow = this.getExtensionAPI().getEditFlow();
 
                 const processContext = function (oContext) {
@@ -58,28 +60,30 @@ sap.ui.define(
                             oDraftContext.setProperty("Status", oNewStatus);
                             return oEditFlow.saveDocument(oDraftContext);
                         } else {
-                            throw new Error("El contexto de borrador no es válido");
+                            throw new Error("The draft context is invalid");
                         }
                     });
                 };
             
                 const processAllContexts = function (contexts) {
                     if (contexts.length === 0) {
-                        sap.m.MessageToast.show("Actualización masiva realizada con éxito");
+                        sap.m.MessageToast.show("Mass update successfully completed");
                         return Promise.resolve();
                     }
                     const oContext = contexts.shift();
                     return processContext(oContext).then(function () {
                         return processAllContexts(contexts);
                     }).catch(function (error) {
-                        sap.m.MessageToast.show("Error en la actualización masiva: " + error.message);
+                        sap.m.MessageToast.show("Error in bulk update: " + error.message);
                         throw error;
                     });
                 };
-            
                 processAllContexts(aSelectedContexts.slice());
-                //********************************************************************** */
             },
+
+            /**
+             * Individual status update
+             */
             onActionAcceptSingles: async function (oEvent) {
                 debugger;
                 const oTable = this.getView().byId("table");
