@@ -51,6 +51,7 @@ sap.ui.define(
                 const oNewStatus = "Accepted";
                 debugger;
                 const oEditFlow = this.getExtensionAPI().getEditFlow();
+                const oRouting = this.getExtensionAPI().getRouting();
 
                 const processContext = function (oContext) {
                     return oEditFlow.editDocument(oContext).then(function (oDraftContext) {
@@ -64,10 +65,12 @@ sap.ui.define(
                         }
                     });
                 };
-            
+
                 const processAllContexts = function (contexts) {
                     if (contexts.length === 0) {
                         sap.m.MessageToast.show("Mass update successfully completed");
+                        debugger;
+                        oRouting.navigateToRoute("/");
                         return Promise.resolve();
                     }
                     const oContext = contexts.shift();
