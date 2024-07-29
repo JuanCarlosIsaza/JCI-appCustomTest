@@ -89,11 +89,38 @@ sap.ui.define(
              */
             onActionAcceptSingles: async function (oEvent) {
                 debugger;
-                const oTable = this.getView().byId("table");
-                const aSelectedContexts = oTable.getSelectedContexts();
+                let oButton = oEvent.getSource();
+                let oContext = oButton.getBindingContext();
                 const oNewStatus = "Accepted";
                 let _Status = oEvent.getSource().data("Status");
+                debugger;
+                const oEditFlow = this.getExtensionAPI().getEditFlow();
+                const oRouting = this.getExtensionAPI().getRouting();
+
+                const processContext = function (oContext) {
+                    return oEditFlow.editDocument(oContext).then(function (oDraftContext) {
+                        debugger;
+                        console.log(oDraftContext);
+                        if (oDraftContext && typeof oDraftContext.setProperty === "function") {
+                            oDraftContext.setProperty("Status", oNewStatus);
+                            return oEditFlow.saveDocument(oDraftContext);
+                        } else {
+                            throw new Error("The draft context is invalid");
+                        }
+                    });
+                };
+                processContext(oContext).then(function () {
+                    sap.m.MessageToast.show("Update successfully completed");
+                    debugger;
+                    oRouting.navigateToRoute("/");
+                }).catch(function (error) {
+                    sap.m.MessageToast.show("Error in update: " + error.message);
+                    throw error;
+                });
             },
+            /**
+             * SelectionChange Event
+             */
             onSelectionChange: function (oEvent) {
                 // debugger;
             }
