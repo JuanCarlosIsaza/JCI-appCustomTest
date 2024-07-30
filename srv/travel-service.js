@@ -15,6 +15,12 @@ class TravelService extends cds.ApplicationService {
       req.data.CustomerID = String(maxID + 1).padStart(6, 0);
     });
 
+    this.on("AcceptTravels", Passenger, async (req) => {
+      await UPDATE(Passenger)
+        .set({ Status: "Accepted" })
+        .where({ CustomerID: req.params[0].CustomerID });
+    });
+
     return super.init();
   }
 }
