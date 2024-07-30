@@ -26,7 +26,13 @@ annotate service.Passenger with @(
       $Type: 'UI.DataField',
       Value: CountryCode_code,
       Label: '{i18n>Country}',
-    }
+    },
+    {
+      $Type             : 'UI.DataFieldForAction',
+      Label             : 'Accept Travels',
+      Action            : 'TravelService.AcceptTravels',
+      InvocationGrouping: #ChangeSet
+    },
   ],
   UI.FieldGroup #General             : {
     Label: 'General',
