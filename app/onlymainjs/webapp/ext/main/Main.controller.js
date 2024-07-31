@@ -49,39 +49,44 @@ sap.ui.define(
                 const oTable = this.getView().byId("table");
                 const aSelectedContexts = oTable.getSelectedContexts();
                 const oNewStatus = "Accepted";
-                debugger;
                 const oEditFlow = this.getExtensionAPI().getEditFlow();
                 const oRouting = this.getExtensionAPI().getRouting();
-
+                const oModel = this.getView().getModel();
+                debugger;
                 const processContext = function (oContext) {
                     return oEditFlow.editDocument(oContext).then(function (oDraftContext) {
                         debugger;
-                        console.log(oDraftContext);
                         if (oDraftContext && typeof oDraftContext.setProperty === "function") {
                             oDraftContext.setProperty("Status", oNewStatus);
-                            return oEditFlow.saveDocument(oDraftContext);
+                            return oDraftContext;
                         } else {
                             throw new Error("The draft context is invalid");
                         }
                     });
                 };
-
                 const processAllContexts = function (contexts) {
-                    if (contexts.length === 0) {
-                        sap.m.MessageToast.show("Mass update successfully completed");
-                        debugger;
-                        oRouting.navigateToRoute("/");
-                        return Promise.resolve();
-                    }
-                    const oContext = contexts.shift();
-                    return processContext(oContext).then(function () {
-                        return processAllContexts(contexts);
-                    }).catch(function (error) {
-                        sap.m.MessageToast.show("Error in bulk update: " + error.message);
-                        throw error;
+                    const aPromises = contexts.map(processContext);
+                    return Promise.all(aPromises).then(function (aDraftContexts) {
+                        aDraftContexts.forEach(function (oDraftContext) {
+                            oModel.addBatchChangeOperations([oModel.createBatchOperation("/" + oDraftContext.getPath(), "PUT", oDraftContext.getObject())]);
+                        });
+                        return new Promise(function (resolve, reject) {
+                            oModel.submitBatch(function (oData, oResponse) {
+                                if (oResponse.statusCode >= 200 && oResponse.statusCode < 300) {
+                                    resolve();
+                                } else {
+                                    reject(new Error("Batch update failed"));
+                                }
+                            });
+                        });
                     });
                 };
-                processAllContexts(aSelectedContexts.slice());
+                processAllContexts(aSelectedContexts.slice()).then(function () {
+                    sap.m.MessageToast.show("Mass update successfully completed");
+                    oRouting.navigateToRoute("/");
+                }).catch(function (error) {
+                    sap.m.MessageToast.show("Error in bulk update: " + error.message);
+                });
             },
 
             /**

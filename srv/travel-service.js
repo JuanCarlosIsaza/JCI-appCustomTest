@@ -1,7 +1,9 @@
+const debug = require('debug')('TravelService');
 const cds = require("@sap/cds");
-
+debug("service");
 class TravelService extends cds.ApplicationService {
   init() {
+    // module.exports = cds.service.impl(async function (service) {
     const { Passenger } = this.entities;
 
     this.before("CREATE", "Passenger.drafts", async (req) => {
@@ -16,6 +18,7 @@ class TravelService extends cds.ApplicationService {
     });
 
     this.on("AcceptTravels", Passenger, async (req) => {
+      debug("AcceptTravels called");
       await UPDATE(Passenger)
         .set({ Status: "Accepted" })
         .where({ CustomerID: req.params[0].CustomerID });
@@ -25,3 +28,4 @@ class TravelService extends cds.ApplicationService {
   }
 }
 module.exports = { TravelService };
+// });
