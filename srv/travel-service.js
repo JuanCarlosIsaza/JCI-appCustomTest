@@ -11,12 +11,12 @@ class TravelService extends cds.ApplicationService {
       const passengers = Array.isArray(data) ? data : [data];
 
       passengers.forEach((passenger) => {
-        if (passenger.discapacitado === 0) {
-          passenger.discapacidad = 'Si';
-        } else if (passenger.discapacitado === 'false') {
-          passenger.discapacidad = 'No';
+        if (passenger.disabled === 'true') {
+          passenger.disability = 'Yes';
+        } else if (passenger.disabled === 'false') {
+          passenger.disability = 'No';
         }else{
-          passenger.discapacidad = 'N/A';
+          passenger.disability = 'N/A';
         }
       });
     });

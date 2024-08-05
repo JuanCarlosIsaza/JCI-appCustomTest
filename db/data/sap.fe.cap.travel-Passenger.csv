@@ -1,4 +1,4 @@
-CustomerID;FirstName;LastName;Title;Street;PostalCode;City;CountryCode_code;PhoneNumber;EMailAddress;Status;discapacitado
+CustomerID;FirstName;LastName;Title;Street;PostalCode;City;CountryCode_code;PhoneNumber;EMailAddress;Status;disabled
 000001;Johannes;Buchholm;Mr.;Muehltalstr. 14;68723;Schwetzingen;DE;+49-291-299232;johannes.buchholm@flight.example.de;Open;false
 000002;Salvador;Fischmann;Mr.;Pza. Pablo Ruiz Picasso 75;08014;Barcelona;ES;+34-267-608201;salvador.fischmann@flight.example.es;Open;true
 000003;Allen;Gutenberg;Mr.;Golden Gate Drive 64;07666;Teaneck;US;+1-461-048473;allen.gutenberg@flight.example.us;Open;false

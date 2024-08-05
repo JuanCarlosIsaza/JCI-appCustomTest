@@ -89,8 +89,8 @@ entity Passenger : managed {
       PhoneNumber          : String(30);
       EMailAddress         : String(256);
       Status               : String(30);
-      discapacitado        : String(5);
-      virtual discapacidad : String(2) null;
+      disabled        : String(5);
+      virtual disability : String(2) null;
 };
 
 entity TravelAgency : MasterData {
