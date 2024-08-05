@@ -5,8 +5,10 @@ class TravelService extends cds.ApplicationService {
   init() {
     // module.exports = cds.service.impl(async function (service) {
     const { Passenger } = this.entities;
-    
-    this.after("READ", Passenger, (data) => {
+
+    this.after("READ", Passenger, (data, req) => {
+
+      console.log("Usuario: ", req.user.id, "Roles: ", req.user.roles);
 
       const passengers = Array.isArray(data) ? data : [data];
 
@@ -15,7 +17,7 @@ class TravelService extends cds.ApplicationService {
           passenger.disability = 'Yes';
         } else if (passenger.disabled === 'false') {
           passenger.disability = 'No';
-        }else{
+        } else {
           passenger.disability = 'N/A';
         }
       });
