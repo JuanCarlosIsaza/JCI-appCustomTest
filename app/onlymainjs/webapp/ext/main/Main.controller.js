@@ -93,35 +93,44 @@ sap.ui.define(
              * Individual status update
              */
             onActionAcceptSingles: async function (oEvent) {
-                debugger;
-                let oButton = oEvent.getSource();
-                let oContext = oButton.getBindingContext();
-                const oNewStatus = "Accepted";
-                let _Status = oEvent.getSource().data("Status");
-                debugger;
-                const oEditFlow = this.getExtensionAPI().getEditFlow();
-                const oRouting = this.getExtensionAPI().getRouting();
+                // debugger;
+                // let oButton = oEvent.getSource();
+                // let oContext = oButton.getBindingContext();
+                // const oNewStatus = "Accepted";
+                // let _Status = oEvent.getSource().data("Status");
+                // debugger;
+                // const oEditFlow = this.getExtensionAPI().getEditFlow();
+                // const oRouting = this.getExtensionAPI().getRouting();
 
-                const processContext = function (oContext) {
-                    return oEditFlow.editDocument(oContext).then(function (oDraftContext) {
-                        debugger;
-                        console.log(oDraftContext);
-                        if (oDraftContext && typeof oDraftContext.setProperty === "function") {
-                            oDraftContext.setProperty("Status", oNewStatus);
-                            return oEditFlow.saveDocument(oDraftContext);
-                        } else {
-                            throw new Error("The draft context is invalid");
-                        }
-                    });
+                // const processContext = function (oContext) {
+                //     return oEditFlow.editDocument(oContext).then(function (oDraftContext) {
+                //         debugger;
+                //         console.log(oDraftContext);
+                //         if (oDraftContext && typeof oDraftContext.setProperty === "function") {
+                //             oDraftContext.setProperty("Status", oNewStatus);
+                //             return oEditFlow.saveDocument(oDraftContext);
+                //         } else {
+                //             throw new Error("The draft context is invalid");
+                //         }
+                //     });
+                // };
+                // processContext(oContext).then(function () {
+                //     sap.m.MessageToast.show("Update successfully completed");
+                //     debugger;
+                //     oRouting.navigateToRoute("/");
+                // }).catch(function (error) {
+                //     sap.m.MessageToast.show("Error in update: " + error.message);
+                //     throw error;
+                // });
+                let sActionName = "TravelService.AcceptTravels";
+                let mParameters = {
+                    contexts: oEvent.getSource().getBindingContext(),
+                    model: oEvent.getSource().getModel(),
+                    label: 'Confirm',	
+                    invocationGrouping: true 	
                 };
-                processContext(oContext).then(function () {
-                    sap.m.MessageToast.show("Update successfully completed");
-                    debugger;
-                    oRouting.navigateToRoute("/");
-                }).catch(function (error) {
-                    sap.m.MessageToast.show("Error in update: " + error.message);
-                    throw error;
-                });
+                this.editFlow.invokeAction(sActionName, mParameters);
+
             },
             /**
              * SelectionChange Event

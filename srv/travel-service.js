@@ -5,6 +5,22 @@ class TravelService extends cds.ApplicationService {
   init() {
     // module.exports = cds.service.impl(async function (service) {
     const { Passenger } = this.entities;
+    
+    this.after("READ", Passenger, (data) => {
+
+      const passengers = Array.isArray(data) ? data : [data];
+
+      passengers.forEach((passenger) => {
+        console.log("PRUEBA#####", passenger);
+        if (passenger.discapacitado === 0) {
+          passenger.discapacidad = 'Si';
+        } else if (passenger.discapacitado === 'false') {
+          passenger.discapacidad = 'No';
+        }else{
+          passenger.discapacidad = 'N/A';
+        }
+      });
+    });
 
     this.before("CREATE", "Passenger.drafts", async (req) => {
       const activeResults = await SELECT`CustomerID`.from(Passenger);
