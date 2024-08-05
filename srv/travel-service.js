@@ -11,7 +11,6 @@ class TravelService extends cds.ApplicationService {
       const passengers = Array.isArray(data) ? data : [data];
 
       passengers.forEach((passenger) => {
-        console.log("PRUEBA#####", passenger);
         if (passenger.discapacitado === 0) {
           passenger.discapacidad = 'Si';
         } else if (passenger.discapacitado === 'false') {

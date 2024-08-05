@@ -1,9 +1,10 @@
 sap.ui.define(
     [
         'sap/fe/core/PageController',
-        'sap/m/MessageToast'
+        'sap/m/MessageToast',
+        'sap/m/MessageBox',
     ],
-    function (PageController, MessageToast) {
+    function (PageController, MessageToast, MessageBox) {
         'use strict';
 
         return PageController.extend('onlymainjs.ext.main.Main', {
@@ -93,44 +94,27 @@ sap.ui.define(
              * Individual status update
              */
             onActionAcceptSingles: async function (oEvent) {
-                // debugger;
-                // let oButton = oEvent.getSource();
-                // let oContext = oButton.getBindingContext();
-                // const oNewStatus = "Accepted";
-                // let _Status = oEvent.getSource().data("Status");
-                // debugger;
-                // const oEditFlow = this.getExtensionAPI().getEditFlow();
-                // const oRouting = this.getExtensionAPI().getRouting();
-
-                // const processContext = function (oContext) {
-                //     return oEditFlow.editDocument(oContext).then(function (oDraftContext) {
-                //         debugger;
-                //         console.log(oDraftContext);
-                //         if (oDraftContext && typeof oDraftContext.setProperty === "function") {
-                //             oDraftContext.setProperty("Status", oNewStatus);
-                //             return oEditFlow.saveDocument(oDraftContext);
-                //         } else {
-                //             throw new Error("The draft context is invalid");
-                //         }
-                //     });
-                // };
-                // processContext(oContext).then(function () {
-                //     sap.m.MessageToast.show("Update successfully completed");
-                //     debugger;
-                //     oRouting.navigateToRoute("/");
-                // }).catch(function (error) {
-                //     sap.m.MessageToast.show("Error in update: " + error.message);
-                //     throw error;
-                // });
-                let sActionName = "TravelService.AcceptTravels";
-                let mParameters = {
-                    contexts: oEvent.getSource().getBindingContext(),
-                    model: oEvent.getSource().getModel(),
-                    label: 'Confirm',	
-                    invocationGrouping: true 	
-                };
-                this.editFlow.invokeAction(sActionName, mParameters);
-
+                MessageBox.confirm("Do you want to execute the action?", {
+                    onClose: function (oAction) {
+                        if (oAction === "OK") {
+                            let sActionName = "TravelService.AcceptTravels";
+                            let mParameters = {
+                                contexts: oEvent.getSource().getBindingContext(),
+                                model: oEvent.getSource().getModel(),
+                                label: 'Confirm',
+                                invocationGrouping: true
+                            };
+                            try {
+                                this.editFlow.invokeAction(sActionName, mParameters);
+                                MessageBox.information("The status has been updated successfully");
+                            } catch (error) {
+                                MessageBox.warning("The action was not executed.");
+                            }
+                        } else {
+                            MessageBox.warning("The action was not executed.");
+                        }
+                    }.bind(this)
+                })
             },
             /**
              * SelectionChange Event
