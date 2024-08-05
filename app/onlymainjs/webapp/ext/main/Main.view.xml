@@ -1,4 +1,4 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:macros="sap.fe.macros" xmlns:macrosTable="sap.fe.macros.table" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" controllerName="onlymainjs.ext.main.Main">
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:macros="sap.fe.macros" xmlns:macrosTable="sap.fe.macros.table" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:commons="sap.suite.ui.commons" controllerName="onlymainjs.ext.main.Main">
     <Page id="Main" title="{i18n>MainTitle}">
         <content>
             <Panel id="mainPanel" expandable="true" expanded="true" headerText="Existing Passengers" width="95%" class="sapUiSmallMarginBegin">
@@ -10,6 +10,17 @@
                     <macros:columns>
                         <macrosTable:Column id="idAcceptAction" header="Accept" importance="High" key="ValidateRecognitionsAction" width="5em" horizontalAlign="Center" placement="Before" anchor="DataField::Status">
                             <Button id="idAcceptActionButton" type="Accept" icon="sap-icon://undefined/accept" press="onActionAcceptSingles" customData:Status="{Status}"/>
+                        </macrosTable:Column>
+                        <macrosTable:Column id="idMicroProcessFlow" header="Process Flow">
+                            <commons:MicroProcessFlow id="_IDGenMicroProcessFlow1">
+                                <commons:content>
+                                    <commons:MicroProcessFlowItem id="_IDGenMicroProcessFlowItem1" icon="sap-icon://account"/>
+                                    <commons:MicroProcessFlowItem id="_IDGenMicroProcessFlowItem2" state="Success" icon="sap-icon://activity-items"/>
+                                    <commons:MicroProcessFlowItem id="_IDGenMicroProcessFlowItem3" state="Warning" icon="sap-icon://account"/>
+                                    <commons:MicroProcessFlowItem id="_IDGenMicroProcessFlowItem4" state="Information" icon="sap-icon://account"/>
+                                    <commons:MicroProcessFlowItem id="_IDGenMicroProcessFlowItem5" state="Error" icon="sap-icon://cancel"/>
+                                </commons:content>
+                            </commons:MicroProcessFlow>
                         </macrosTable:Column>
                     </macros:columns>
                 </macros:Table>
