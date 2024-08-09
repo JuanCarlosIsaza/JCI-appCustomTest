@@ -12,6 +12,11 @@ annotate service.Passenger with @(
       Value: Status,
       Label: 'Status',
     },
+        {
+      $Type: 'UI.DataField',
+      Value: Note,
+      Label: '{i18n>Note}',
+    },
     {
       $Type: 'UI.DataField',
       Value: CustomerID,

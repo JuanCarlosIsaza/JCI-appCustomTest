@@ -93,28 +93,50 @@ sap.ui.define(
             /**
              * Individual status update
              */
-            onActionAcceptSingles: async function (oEvent) {
-                MessageBox.confirm("Do you want to execute the action?", {
-                    onClose: function (oAction) {
-                        if (oAction === "OK") {
-                            let sActionName = "TravelService.AcceptTravels";
-                            let mParameters = {
-                                contexts: oEvent.getSource().getBindingContext(),
-                                model: oEvent.getSource().getModel(),
-                                label: 'Confirm',
-                                invocationGrouping: true
-                            };
-                            try {
-                                this.editFlow.invokeAction(sActionName, mParameters);
-                                MessageBox.information("The status has been updated successfully");
-                            } catch (error) {
+            onActionStatus: async function (oEvent) {
+                debugger;
+                const oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+                let sActionName;
+                let sStatus = oEvent.getSource().data("Status"),
+                    sCustomerID = oEvent.getSource().data("sCustomerID");
+                let sButtonId = oEvent.getSource().getId();
+
+                if (sButtonId.includes("idValidateAction") || sButtonId.includes("idAcceptActionButton")) {
+                    sActionName = "TravelService.AcceptTravels";
+                } else if (sButtonId.includes("idRejectAction") || sButtonId.includes("idRejectActionButton")) {
+                    sActionName = "TravelService.RejectTravels";
+                } else if (sButtonId.includes("idCancelAction") || sButtonId.includes("idCancelActionButton")) {
+                    sActionName = "TravelService.CancelTravels";
+                }
+
+                if (sStatus === "Accepted" && sActionName === "TravelService.AcceptTravels") {
+                    MessageBox.warning(oResourceBundle.getText("statusWarnMessage", [sCustomerID, sStatus]));
+                } else if (sStatus === "Rejected" && sActionName === "TravelService.RejectTravels") {
+                    MessageBox.warning(oResourceBundle.getText("statusWarnMessage", [sCustomerID, sStatus]));
+                } else if (sStatus === "Cancel" && sActionName === "TravelService.CancelTravels") {
+                    MessageBox.warning(oResourceBundle.getText("statusWarnMessage", [sCustomerID, sStatus]));
+                } else {
+                    MessageBox.confirm("Do you want to execute the action?", {
+                        onClose: function (oAction) {
+                            if (oAction === "OK") {
+                                let mParameters = {
+                                    contexts: oEvent.getSource().getBindingContext(),
+                                    model: oEvent.getSource().getModel(),
+                                    label: 'Confirm',
+                                    invocationGrouping: true
+                                };
+                                try {
+                                    this.editFlow.invokeAction(sActionName, mParameters);
+                                    MessageBox.information("The status has been updated successfully");
+                                } catch (error) {
+                                    MessageBox.warning("The action was not executed.");
+                                }
+                            } else {
                                 MessageBox.warning("The action was not executed.");
                             }
-                        } else {
-                            MessageBox.warning("The action was not executed.");
-                        }
-                    }.bind(this)
-                })
+                        }.bind(this)
+                    })
+                }
             },
             /**
              * SelectionChange Event

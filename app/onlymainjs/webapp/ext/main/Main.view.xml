@@ -5,20 +5,24 @@
                 <macros:FilterBar metaPath="@com.sap.vocabularies.UI.v1.SelectionFields" liveMode="true" id="filterBar"/>
                 <macros:Table metaPath="@com.sap.vocabularies.UI.v1.LineItem" readOnly="true" filterBar="filterBar" id="table" selectionMode="Multi" selectionChange="onSelectionChange">
                     <macros:actions>
-                        <macrosTable:Action id="idMassAccept" key="MassAccept" text="Mass Accept" enabled="true" press="onMassAcceptAction" requiresSelection="true"/>
+                        <macrosTable:Action id="idMassAccept" key="MassAccept" text="Mass Accept" enabled="true" press="onActionStatus" requiresSelection="true"/>
                     </macros:actions>
                     <macros:columns>
-                        <macrosTable:Column id="idAcceptAction" header="Accept" importance="High" key="ValidateRecognitionsAction" width="5em" horizontalAlign="Center" placement="Before" anchor="DataField::Status">
-                            <Button id="idAcceptActionButton" type="Accept" icon="sap-icon://undefined/accept" press="onActionAcceptSingles" customData:Status="{Status}"/>
+                        <macrosTable:Column id="idAcceptActionColumn" header="Accept" importance="High" key="ValidateAction" width="5em" horizontalAlign="Center" placement="Before" anchor="DataField::Status">
+                            <Button id="idAcceptActionButton" type="Accept" icon="sap-icon://undefined/accept" press="onActionStatus" customData:Status="{Status}"/>
                         </macrosTable:Column>
-                        <macrosTable:Column id="idMicroProcessFlow" header="Process Flow">
-                            <commons:MicroProcessFlow id="_IDGenMicroProcessFlow1">
+                        <macrosTable:Column id="idRejectActionColumn" header="Reject" importance="High" key="RejectAction" width="5em" horizontalAlign="Center" placement="Before" anchor="DataField::Status">
+                            <Button id="idRejectActionButton" type="Reject" icon="sap-icon://undefined/decline" press="onActionStatus" customData:Status="{Status}" customData:estadoId="{CustomerID}"/>
+                        </macrosTable:Column>
+                        <macrosTable:Column id="idCancelActionColumn" header="Cancel" importance="High" key="CancelAction" width="5em" horizontalAlign="Center" placement="Before" anchor="DataField::Status">
+                            <Button id="idCancelActionButton"  icon="sap-icon://cancel" press="onActionStatus" customData:Status="{Status}" visible="{= ${Status}==='Open' }"/>
+                        </macrosTable:Column>
+                        <macrosTable:Column id="idActions" header="Actions" width="15em" horizontalAlign="Center" placement="Before" anchor="DataField::Status">
+                            <commons:MicroProcessFlow id="idMicroProcessFlowActions">
                                 <commons:content>
-                                    <commons:MicroProcessFlowItem id="_IDGenMicroProcessFlowItem1" icon="sap-icon://account"/>
-                                    <commons:MicroProcessFlowItem id="_IDGenMicroProcessFlowItem2" state="Success" icon="sap-icon://activity-items"/>
-                                    <commons:MicroProcessFlowItem id="_IDGenMicroProcessFlowItem3" state="Warning" icon="sap-icon://account"/>
-                                    <commons:MicroProcessFlowItem id="_IDGenMicroProcessFlowItem4" state="Information" icon="sap-icon://account"/>
-                                    <commons:MicroProcessFlowItem id="_IDGenMicroProcessFlowItem5" state="Error" icon="sap-icon://cancel"/>
+                                    <commons:MicroProcessFlowItem id="idValidateAction" key="ValidateAction" state="Success" icon="sap-icon://undefined/accept" press="onActionStatus" customData:solicitudIdString="{Status}" customData:estadoId="{CustomerID}"/>                                          
+                                    <commons:MicroProcessFlowItem id="idRejectAction" key="RejectAction" state="Error" icon="sap-icon://undefined/decline" press="onActionStatus" customData:solicitudIdString="{Status}" customData:estadoId="{CustomerID}"/>  
+                                    <commons:MicroProcessFlowItem id="idCancelAction" key="RejectAction" state="Information" icon="sap-icon://cancel" press="onActionStatus" customData:solicitudIdString="{Status}" customData:estadoId="{CustomerID}"/>
                                 </commons:content>
                             </commons:MicroProcessFlow>
                         </macrosTable:Column>

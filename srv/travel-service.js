@@ -37,7 +37,19 @@ class TravelService extends cds.ApplicationService {
     this.on("AcceptTravels", Passenger, async (req) => {
       debug("AcceptTravels called");
       await UPDATE(Passenger)
-        .set({ Status: "Accepted" })
+        .set({ Status: "Accepted", Note: req.data.pNote})
+        .where({ CustomerID: req.params[0].CustomerID });
+    });
+
+    this.on("RejectTravels", Passenger, async (req) => {
+      await UPDATE(Passenger)
+        .set({ Status: "Rejected", Note: req.data.pNote})
+        .where({ CustomerID: req.params[0].CustomerID });
+    });
+
+    this.on("CancelTravels", Passenger, async (req) => {
+      await UPDATE(Passenger)
+        .set({ Status: "Canceled", Note: req.data.pNote})
         .where({ CustomerID: req.params[0].CustomerID });
     });
 
