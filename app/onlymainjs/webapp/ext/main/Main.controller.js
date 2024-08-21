@@ -127,6 +127,16 @@ sap.ui.define(
                                 };
                                 try {
                                     this.editFlow.invokeAction(sActionName, mParameters);
+                                    //**************************************** */
+                                    debugger;
+                                    // const table = Core.byId("rrhh.services.vs.front.f101.f101::vsFiltroSegRecosMain--idRecognitions");
+                                    const table = this.byId("idRecognitions");
+                                    table.removeSelections(true);
+                                    table.getModel().refresh(true);
+                                    if (table) {
+                                      table.refresh();
+                                    }
+                                    //**************************************** */
                                     MessageBox.information("The status has been updated successfully");
                                 } catch (error) {
                                     MessageBox.warning("The action was not executed.");
