@@ -14,7 +14,7 @@
     "@prettier/plugin-xml": "^3.2.1",
     "@sap/cds-lsp": "^7.2.0",
     "@sap/eslint-plugin-cds": "^2.6.3",
-    "@sap/ux-specification": "^1.120.14",
+    "@sap/ux-specification": "^1.124.1",
     "cds-plugin-ui5": "^0.2.1",
     "eslint": "^8.50.0",
     "husky": "^8.0.3",
@@ -27,7 +27,8 @@
     "lint": "eslint .",
     "format": "prettier --write --ignore-unknown . && format-cds -f .",
     "watch-maintainpassengers": "cds watch --open maintainpassengers/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "watch-onlymainjs": "cds watch --open onlymainjs/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-onlymainjs": "cds watch --open onlymainjs/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-pagemain": "cds watch --open pagemain/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "lint-staged": {
     "*.js": "eslint --fix",
