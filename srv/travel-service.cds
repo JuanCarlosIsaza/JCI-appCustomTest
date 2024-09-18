@@ -2,7 +2,33 @@ using {sap.fe.cap.travel as my} from '../db/schema';
 
 service TravelService @(path: '/processor') {
 
-  entity Passenger as projection on my.Passenger
+  entity Passenger as projection on my.Passenger {
+      key CustomerID,
+          FirstName,
+          LastName,
+          Title,
+          Street,
+          PostalCode,
+          City,
+          CountryCode,
+          PhoneNumber,
+          EMailAddress,
+          Status,
+          Note,
+          disabled,
+          birthdate,
+          case
+            when
+              (
+                disabled = '1'
+              )
+            then
+              'Sí'
+            else
+              'No'
+          end as disability : String(2),
+          FlightDateTime
+    }
     actions {
       @cds.odata.bindingparameter.name: '_it'
       @Common.SideEffects             : {TargetProperties: [
