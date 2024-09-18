@@ -1,46 +1,55 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:macros="sap.fe.macros" xmlns:macrosTable="sap.fe.macros.table" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:commons="sap.suite.ui.commons" controllerName="onlymainjs.ext.main.Main">
-    <Page id="Main" title="{i18n>MainTitle}">
-        <content>
-            <Panel id="mainPanel" expandable="true" expanded="true" headerText="Existing Passengers" width="95%" class="sapUiSmallMarginBegin">
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:macros="sap.fe.macros" xmlns:macrosTable="sap.fe.macros.table" xmlns:v="sap.ui.fl.variants" xmlns:f="sap.f" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:commons="sap.suite.ui.commons" controllerName="onlymainjs.ext.main.Main">
+    <f:DynamicPage id="idMain" title="{i18n>appTitle}" preserveHeaderStateOnScroll="false" showFooter="true" fitContent="true">
+        <f:title>
+            <f:DynamicPageTitle id="idDynamicPageTitle1">
+                <f:heading>
+                    <v:VariantManagement id="vm" for="FilterBar,LineItemTable" showSetAsDefault="true" headerLevel="H2"/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader id="idDynamicPageHeader1" pinnable="true">
+                <VBox id="idVBox1">
                 <macros:FilterBar metaPath="@com.sap.vocabularies.UI.v1.SelectionFields" liveMode="true" id="filterBar"/>
-                <macros:Table metaPath="@com.sap.vocabularies.UI.v1.LineItem" readOnly="true" filterBar="filterBar" id="table" selectionMode="Multi" type="GridTable" selectionChange="onSelectionChange">
-                    <macros:actions>
-                        <macrosTable:Action id="idMassAccept" key="MassAccept" text="Mass Accept" enabled="true" press="onActionStatus" requiresSelection="true"/>
-                    </macros:actions>
-                    <macros:columns>
-                        <macrosTable:Column id="idAcceptActionColumn" header="Accept" importance="High" key="ValidateAction" width="10em" horizontalAlign="Center" placement="Before" anchor="DataField::Status">
-                            <HBox justifyContent="Center">
-                                <items>
-                                    <HBox width="3em" height="auto" justifyContent="SpaceAround" alignItems="Center">
-                                    <Button id="idAcceptActionButton" type="Accept" icon="sap-icon://undefined/accept" press="onActionStatus" customData:Status="{Status}" customData:estadoId="{CustomerID}" />
+                </VBox>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <IconTabBar id="idViewsTabBar" expanded="{device>/isNoPhone}">
+                <items>
+                    <IconTabFilter id="idViewsTabPassenger" text="{i18n>Passengers}" key="ViewsTabPassenger">
+                        <macros:Table metaPath="@com.sap.vocabularies.UI.v1.LineItem" readOnly="true" filterBar="filterBar" id="table" selectionMode="Multi" type="GridTable" selectionChange="onSelectionChange">
+                            <macros:actions>
+                                <macrosTable:Action id="idMassAccept" key="MassAccept" text="Mass Accept" enabled="true" press="onRemoveSelections" requiresSelection="true"/>
+                            </macros:actions>
+                            <macros:columns>
+                                <macrosTable:Column id="idAcceptActionColumn" header="Actions" importance="High" key="ValidateAction" width="10em" horizontalAlign="Center" placement="Before" anchor="DataField::Status">
+                                    <HBox justifyContent="Center">
+                                        <items>
+                                            <HBox width="3em" height="auto" justifyContent="SpaceAround" alignItems="Center">
+                                            <Button id="idAcceptActionButton" type="Accept" icon="sap-icon://undefined/accept" press="onActionStatus" customData:Status="{Status}" customData:estadoId="{CustomerID}" />
+                                            </HBox>
+                                            <HBox width="3em" height="auto" justifyContent="SpaceAround" alignItems="Center">
+                                            <Button id="idRejectActionButton" type="Reject" icon="sap-icon://undefined/decline" press="onActionStatus" customData:Status="{Status}" customData:estadoId="{CustomerID}" enabled="{= %{Status}!=='Open' ? true : false}"/>
+                                            </HBox>
+                                            <HBox width="3em" height="auto" justifyContent="SpaceAround" alignItems="Center">
+                                            <Button id="idCancelActionButton"  icon="sap-icon://cancel" press="onMassAcceptAction" customData:Status="{Status}" customData:estadoId="{CustomerID}" visible="{= %{Status}==='Open' ? true : false}"/>
+                                            </HBox>
+                                        </items>
                                     </HBox>
-                                    <HBox width="3em" height="auto" justifyContent="SpaceAround" alignItems="Center">
-                                    <Button id="idRejectActionButton" type="Reject" icon="sap-icon://undefined/decline" press="onActionStatus" customData:Status="{Status}" customData:estadoId="{CustomerID}" enabled="{= %{Status}!=='Open' ? true : false}"/>
-                                    </HBox>
-                                    <HBox width="3em" height="auto" justifyContent="SpaceAround" alignItems="Center">
-                                    <Button id="idCancelActionButton"  icon="sap-icon://cancel" press="onMassAcceptAction" customData:Status="{Status}" customData:estadoId="{CustomerID}" visible="{= %{Status}==='Open' ? true : false}"/>
-                                    </HBox>
-                                </items>
-                            </HBox>
-                        </macrosTable:Column>
-                        <!-- <macrosTable:Column id="idRejectActionColumn" header="Reject" importance="High" key="RejectAction" width="5em" horizontalAlign="Center" placement="Before" anchor="DataField::Status">
-                            <Button id="idRejectActionButton" type="Reject" icon="sap-icon://undefined/decline" press="onActionStatus" customData:Status="{Status}" customData:estadoId="{CustomerID}" visible="{= ${Status}!=='Open' }"/>
-                        </macrosTable:Column>
-                        <macrosTable:Column id="idCancelActionColumn" header="Cancel" importance="High" key="CancelAction" width="5em" horizontalAlign="Center" placement="Before" anchor="DataField::Status">
-                            <Button id="idCancelActionButton"  icon="sap-icon://cancel" press="onMassAcceptAction" customData:Status="{Status}" customData:estadoId="{CustomerID}" visible="{= ${Status}==='Open' }"/>
-                        </macrosTable:Column> -->
-                        <macrosTable:Column id="idActions" header="Actions" width="15em" horizontalAlign="Center" placement="Before" anchor="DataField::Status">
-                            <commons:MicroProcessFlow id="idMicroProcessFlowActions">
-                                <commons:content>
-                                    <commons:MicroProcessFlowItem id="idValidateAction" key="ValidateAction" state="Success" icon="sap-icon://undefined/accept" press="onActionStatus" customData:solicitudIdString="{Status}" customData:estadoId="{CustomerID}"/>                                          
-                                    <commons:MicroProcessFlowItem id="idRejectAction" key="RejectAction" state="Error" icon="sap-icon://undefined/decline" press="onActionStatus" customData:solicitudIdString="{Status}" customData:estadoId="{CustomerID}"/>  
-                                    <commons:MicroProcessFlowItem title="PRUEBA" id="idCancelAction" key="RejectAction" state="Information" icon="sap-icon://cancel" press="onMassAcceptAction" customData:solicitudIdString="{Status}" customData:estadoId="{CustomerID}"/>
-                                </commons:content>
-                            </commons:MicroProcessFlow>
-                        </macrosTable:Column>
-                    </macros:columns>
-                </macros:Table>
-            </Panel>
-        </content>
-    </Page>
+                                </macrosTable:Column>
+                                <macrosTable:Column id="idFlightDateTimeColumn" header="Flight DateTime without UTC" importance="High" key="FlightDateTime" width="15em" horizontalAlign="Center" placement="Before" anchor="Datafield::FirstName">
+                                    <Text text="{
+                                                    path: 'FlightDateTime', 
+                                                    type: 'sap.ui.model.odata.type.DateTime', 
+                                                    formatOptions: {style: 'medium', UTC: true}
+                                                }"/>
+                                </macrosTable:Column>
+                            </macros:columns>
+                        </macros:Table>
+                    </IconTabFilter>  
+                </items>
+            </IconTabBar>
+        </f:content>        
+    </f:DynamicPage>
 </mvc:View>
