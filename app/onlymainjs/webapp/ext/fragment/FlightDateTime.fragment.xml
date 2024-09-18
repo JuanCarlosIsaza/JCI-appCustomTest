@@ -1,0 +1,8 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+    <Text
+        text="{
+            path: 'FlightDateTime',
+            type: 'any'  
+        }"
+        />
+</core:FragmentDefinition>
