@@ -22,18 +22,23 @@ sap.ui.define(
              * (NOT before the first rendering! onInit() is used for that one!).
              * @memberOf onlymainjs.ext.main.Main
              */
-            //  onBeforeRendering: function() {
-            //
-            //  },
+            onBeforeRendering: function () {
+                debugger;
+                sap.ui.getCore().getConfiguration().getFormatSettings().setDatePattern("medium", "dd/MM/YYYY", "UTC: false");
+            },
 
             /**
              * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
              * This hook is the same one that SAPUI5 controls get after being rendered.
              * @memberOf onlymainjs.ext.main.Main
              */
-            //  onAfterRendering: function() {
-            //
-            //  },
+            onAfterRendering: function () {
+                // debugger;
+                // sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable")?.setFixedColumnCount(1);
+                setTimeout(function () {
+                    sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable")?.setFixedColumnCount(1);
+                }, 101);
+            },
 
             /**
              * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
@@ -41,7 +46,7 @@ sap.ui.define(
              */
             //  onExit: function() {
             //
-            //  }
+            //  },
 
             /**
              * Mass status update
@@ -153,7 +158,44 @@ sap.ui.define(
              */
             onSelectionChange: function (oEvent) {
                 // debugger;
-            }
+                            // sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable")?.setFixedColumnCount(1);
+            },
+            onRemoveSelections: function (oEvent) {
+                debugger;
+                // sap.ui.getCore().byId("onlymainjs--fe::table::Passenger::LineItem::Table").getMDCTable()._oTable.removeSelections(); 
+                // sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable").removeSelections(true);
+                // sap.ui.getCore().byId("onlymainjs--fe::table::Passenger::LineItem::Table").getMDCTable().clearSelection();
+                // sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable").clearSelection(); 
+                // sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable").removeSelections();
+                // var oTable = sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable");
+                // console.log("Plugin:",oTable.getPlugins());
+                // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
+                // console.log(oTable);
+                // this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable").clearSelection();
+                // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
+                // console.log(oTable.getMetadata().getName());
+                // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
+                // if (oTable.getMetadata().getName() === "sap.ui.table.Table") {
+                //     oTable.clearSelection();
+                // } else if (oTable.getMetadata().getName() === "sap.m.Table") {
+                //     oTable.removeSelections(true);
+                // } else {
+                //     console.error("Tipo de tabla no soportado.");
+                // }
+                // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
+                // var oPlugin = oTable.getPlugins()[0]; // Asumiendo que el plugin de selección es el primero
+                // if (oPlugin && oPlugin.clearSelection) {
+                //     oPlugin.clearSelection();
+                // } else {
+                //     console.error("No se encontró un plugin de selección o el método clearSelection no está disponible.");
+                // }
+                // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
+                // oTable.removeAllPlugins();
+                // oTable.clearSelection();
+                var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
+                console.log(oTable);
+
+            },
         });
     }
 );
