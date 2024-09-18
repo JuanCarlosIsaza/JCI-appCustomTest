@@ -1,4 +1,4 @@
-const debug = require('debug')('TravelService');
+const debug = require("debug")("TravelService");
 const cds = require("@sap/cds");
 debug("service");
 class TravelService extends cds.ApplicationService {
@@ -6,22 +6,22 @@ class TravelService extends cds.ApplicationService {
     // module.exports = cds.service.impl(async function (service) {
     const { Passenger } = this.entities;
 
-    this.after("READ", Passenger, (data, req) => {
+    // this.after("READ", Passenger, (data, req) => {
 
-      console.log("Usuario: ", req.user.id, "Roles: ", req.user.roles);
+    //   console.log("Usuario: ", req.user.id, "Roles: ", req.user.roles);
 
-      const passengers = Array.isArray(data) ? data : [data];
+    //   const passengers = Array.isArray(data) ? data : [data];
 
-      passengers.forEach((passenger) => {
-        if (passenger.disabled === 'true') {
-          passenger.disability = 'Yes';
-        } else if (passenger.disabled === 'false') {
-          passenger.disability = 'No';
-        } else {
-          passenger.disability = 'N/A';
-        }
-      });
-    });
+    //   passengers.forEach((passenger) => {
+    //     if (passenger.disabled === 'true') {
+    //       passenger.disability = 'Yes';
+    //     } else if (passenger.disabled === 'false') {
+    //       passenger.disability = 'No';
+    //     } else {
+    //       passenger.disability = 'N/A';
+    //     }
+    //   });
+    // });
 
     this.before("CREATE", "Passenger.drafts", async (req) => {
       const activeResults = await SELECT`CustomerID`.from(Passenger);
@@ -37,19 +37,19 @@ class TravelService extends cds.ApplicationService {
     this.on("AcceptTravels", Passenger, async (req) => {
       debug("AcceptTravels called");
       await UPDATE(Passenger)
-        .set({ Status: "Accepted", Note: req.data.pNote})
+        .set({ Status: "Accepted", Note: req.data.pNote })
         .where({ CustomerID: req.params[0].CustomerID });
     });
 
     this.on("RejectTravels", Passenger, async (req) => {
       await UPDATE(Passenger)
-        .set({ Status: "Rejected", Note: req.data.pNote})
+        .set({ Status: "Rejected", Note: req.data.pNote })
         .where({ CustomerID: req.params[0].CustomerID });
     });
 
     this.on("CancelTravels", Passenger, async (req) => {
       await UPDATE(Passenger)
-        .set({ Status: "Canceled", Note: req.data.pNote})
+        .set({ Status: "Canceled", Note: req.data.pNote })
         .where({ CustomerID: req.params[0].CustomerID });
     });
 
