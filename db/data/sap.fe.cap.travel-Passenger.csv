@@ -1,6 +1,6 @@
-CustomerID;FirstName;LastName;Title;Street;PostalCode;City;CountryCode_code;PhoneNumber;EMailAddress;Status;disabled
-000001;Johannes;Buchholm;Mr.;Muehltalstr. 14;68723;Schwetzingen;DE;+49-291-299232;johannes.buchholm@flight.example.de;Open;false
-000002;Salvador;Fischmann;Mr.;Pza. Pablo Ruiz Picasso 75;08014;Barcelona;ES;+34-267-608201;salvador.fischmann@flight.example.es;Open;true
-000003;Allen;Gutenberg;Mr.;Golden Gate Drive 64;07666;Teaneck;US;+1-461-048473;allen.gutenberg@flight.example.us;Open;false
-000004;Sophie;Detemple;Mrs.;route de Pégomas 45;78140;Vélizy;FR;+33-413-794457;sophie.detemple@flight.example.fr;Open;true
-000005;Adam;Illner;Mr.;Via Giulio Cesare 56;00195;Roma;IT;+39-688-553077;adam.illner@flight.example.it;Open;false
+CustomerID;FirstName;LastName;Title;Street;PostalCode;City;CountryCode_code;PhoneNumber;EMailAddress;Status;disabled;birthdate;FlightDateTime
+000001;Johannes;Buchholm;Mr.;Muehltalstr. 14;68723;Schwetzingen;DE;+49-291-299232;johannes.buchholm@flight.example.de;Open;false;1999-09-27 00:00:00;2024-12-01 01:30:00
+000002;Salvador;Fischmann;Mr.;Pza. Pablo Ruiz Picasso 75;08014;Barcelona;ES;+34-267-608201;salvador.fischmann@flight.example.es;Open;true;1995-03-01 00:00:00;2025-01-11 04:45:00
+000003;Allen;Gutenberg;Mr.;Golden Gate Drive 64;07666;Teaneck;US;+1-461-048473;allen.gutenberg@flight.example.us;Open;false;2000-04-12 00:00:00;2024-10-22 11:15:00
+000004;Sophie;Detemple;Mrs.;route de Pégomas 45;78140;Vélizy;FR;+33-413-794457;sophie.detemple@flight.example.fr;Open;true;1989-12-17 00:00:00;2024-08-02 22:30:00
+000005;Adam;Illner;Mr.;Via Giulio Cesare 56;00195;Roma;IT;+39-688-553077;adam.illner@flight.example.it;Open;false;2001-01-30 00:00:00;2024-11-16 21:50:00
