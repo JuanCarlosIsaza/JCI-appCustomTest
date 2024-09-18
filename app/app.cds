@@ -12,15 +12,15 @@ annotate service.Passenger with @(
       Value: Status,
       Label: 'Status',
     },
-        {
-      $Type: 'UI.DataField',
-      Value: Note,
-      Label: '{i18n>Note}',
-    },
     {
       $Type: 'UI.DataField',
       Value: CustomerID,
       Label: '{i18n>LastName}',
+    },
+    {
+      $Type: 'UI.DataField',
+      Value: FlightDateTime,
+      Label: '{i18n>FlightDateTime}',
     },
     {
       $Type: 'UI.DataField',
@@ -29,8 +29,18 @@ annotate service.Passenger with @(
     },
     {
       $Type: 'UI.DataField',
+      Value: birthdate,
+      Label: '{i18n>birthdate}',
+    },
+    {
+      $Type: 'UI.DataField',
       Value: CountryCode_code,
       Label: '{i18n>Country}',
+    },
+    {
+      $Type: 'UI.DataField',
+      Value: Note,
+      Label: '{i18n>Note}',
     },
     {
       $Type             : 'UI.DataFieldForAction',
