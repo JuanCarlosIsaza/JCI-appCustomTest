@@ -103,6 +103,11 @@
           }
         }
       }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {}
+      }
     }
   }
 }
