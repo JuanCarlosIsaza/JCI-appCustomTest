@@ -1,7 +1,26 @@
 <mvc:View controllerName="pagemain.pagemain.controller.pageMain"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-        <content />
-    </Page>
+    <VBox>
+        <IconTabBar
+            id="idIconTabBar"
+            select=".onFilterSelect"
+            class="sapUiResponsiveContentPadding">
+            <items>
+                <IconTabFilter
+                    icon="sap-icon://add-activity"
+                    text="Ofrecimientos"
+                    key="Ofr" />
+                <IconTabFilter
+                    icon="sap-icon://add-calendar"
+                    text="Solicitudes"
+                    key="Sol" />
+                <IconTabFilter
+                    icon="sap-icon://activities"
+                    text="Seguimientos"
+                    key="Seg" />
+            </items>
+        </IconTabBar>
+        <VBox id="contentContainer" class="sapUiSmallMarginTop" height="100%" width="100%"/>
+    </VBox>
 </mvc:View>
