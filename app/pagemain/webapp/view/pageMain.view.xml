@@ -1,26 +1,18 @@
 <mvc:View controllerName="pagemain.pagemain.controller.pageMain"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
-    <VBox>
-        <IconTabBar
-            id="idIconTabBar"
-            select=".onFilterSelect"
-            class="sapUiResponsiveContentPadding">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <VBox id="_IDGenVBox">					
+        <IconTabBar id="_IDGenIconTabBar" selectedKey="filter2" stretchContentHeight="true">
             <items>
-                <IconTabFilter
-                    icon="sap-icon://add-activity"
-                    text="Ofrecimientos"
-                    key="Ofr" />
-                <IconTabFilter
-                    icon="sap-icon://add-calendar"
-                    text="Solicitudes"
-                    key="Sol" />
-                <IconTabFilter
-                    icon="sap-icon://activities"
-                    text="Seguimientos"
-                    key="Seg" />
+                <IconTabFilter icon="sap-icon://add-calendar"
+                                text="onlymainjs" 
+                                id="filter2">
+                    <content>
+                        <core:ComponentContainer id="_IDGenComponentContainer2" height="100%" name="onlymainjs" manifest="true"/>
+                    </content>
+                </IconTabFilter>
             </items>
-        </IconTabBar>
-        <VBox id="contentContainer" class="sapUiSmallMarginTop" height="100%" width="100%"/>
+        </IconTabBar>			
     </VBox>
 </mvc:View>

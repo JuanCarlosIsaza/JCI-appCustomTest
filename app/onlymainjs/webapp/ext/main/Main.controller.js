@@ -139,7 +139,7 @@ sap.ui.define(
                                     table.removeSelections(true);
                                     table.getModel().refresh(true);
                                     if (table) {
-                                      table.refresh();
+                                        table.refresh();
                                     }
                                     //**************************************** */
                                     MessageBox.information("The status has been updated successfully");
@@ -158,42 +158,66 @@ sap.ui.define(
              */
             onSelectionChange: function (oEvent) {
                 // debugger;
-                            // sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable")?.setFixedColumnCount(1);
+                // sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable")?.setFixedColumnCount(1);
             },
             onRemoveSelections: function (oEvent) {
+                //Eliminamos selección
                 debugger;
-                // sap.ui.getCore().byId("onlymainjs--fe::table::Passenger::LineItem::Table").getMDCTable()._oTable.removeSelections(); 
-                // sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable").removeSelections(true);
-                // sap.ui.getCore().byId("onlymainjs--fe::table::Passenger::LineItem::Table").getMDCTable().clearSelection();
-                // sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable").clearSelection(); 
-                // sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable").removeSelections();
-                // var oTable = sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable");
-                // console.log("Plugin:",oTable.getPlugins());
+                sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable").clearSelection();
+
+                // Uncaught Error: Unsupported operation: sap.ui.table.Table#clearSelection must not be called if a selection plugin is applied.
+                // at E.clearSelection (Table-dbg.js:3312:10)
+                            // Table.prototype.clearSelection = function() {
+                            //     if (this._hasSelectionPlugin()) {
+                            //         throw new Error("Unsupported operation: sap.ui.table.Table#clearSelection must not be called if a selection plugin is applied.");
+                            //     }
+                        
+                            //     this._getSelectionPlugin().clearSelection();
+                            //     return this;
+                            // };
+                // at c.onRemoveSelections (Main.controller.js:166:94)
+                // at PageController.ts:109:54
+                // at m.runWithOwner (ManagedObject-dbg.js:1216:14)
+                // at k.runAsOwner (Component-dbg.js:800:24)
+                // at c.we [as onRemoveSelections] (PageController.ts:109:30)
+                // at r.fireEvent (EventProvider-dbg.js:240:38)
+                // at c.fireEvent (Element-dbg.js:681:44)
+                // at c.firePress (ManagedObjectMetadata-dbg.js:826:49)
+                // at S.ontap (Button-dbg.js:599:9)
+
+                // debugger;
+                // // sap.ui.getCore().byId("onlymainjs--fe::table::Passenger::LineItem::Table").getMDCTable()._oTable.removeSelections(); 
+                // // sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable").removeSelections(true);
+                // // sap.ui.getCore().byId("onlymainjs--fe::table::Passenger::LineItem::Table").getMDCTable().clearSelection();
+                // // sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable").clearSelection(); 
+                // // sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable").removeSelections();
+                // // var oTable = sap.ui.getCore().byId("onlymainjs::PassengerMain--table-content-innerTable");
+                // // console.log("Plugin:",oTable.getPlugins());
+                // // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
+                // // console.log(oTable);
+                // // this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable").clearSelection();
+                // // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
+                // // console.log(oTable.getMetadata().getName());
+                // // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
+                // // if (oTable.getMetadata().getName() === "sap.ui.table.Table") {
+                // //     oTable.clearSelection();
+                // // } else if (oTable.getMetadata().getName() === "sap.m.Table") {
+                // //     oTable.removeSelections(true);
+                // // } else {
+                // //     console.error("Tipo de tabla no soportado.");
+                // // }
+                // // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
+                // // var oPlugin = oTable.getPlugins()[0]; // Asumiendo que el plugin de selección es el primero
+                // // if (oPlugin && oPlugin.clearSelection) {
+                // //     oPlugin.clearSelection();
+                // // } else {
+                // //     console.error("No se encontró un plugin de selección o el método clearSelection no está disponible.");
+                // // }
+                // // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
+                // // oTable.removeAllPlugins();
+                // // oTable.clearSelection();
                 // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
                 // console.log(oTable);
-                // this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable").clearSelection();
-                // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
-                // console.log(oTable.getMetadata().getName());
-                // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
-                // if (oTable.getMetadata().getName() === "sap.ui.table.Table") {
-                //     oTable.clearSelection();
-                // } else if (oTable.getMetadata().getName() === "sap.m.Table") {
-                //     oTable.removeSelections(true);
-                // } else {
-                //     console.error("Tipo de tabla no soportado.");
-                // }
-                // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
-                // var oPlugin = oTable.getPlugins()[0]; // Asumiendo que el plugin de selección es el primero
-                // if (oPlugin && oPlugin.clearSelection) {
-                //     oPlugin.clearSelection();
-                // } else {
-                //     console.error("No se encontró un plugin de selección o el método clearSelection no está disponible.");
-                // }
-                // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
-                // oTable.removeAllPlugins();
-                // oTable.clearSelection();
-                var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
-                console.log(oTable);
 
             },
         });
