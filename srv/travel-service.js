@@ -53,6 +53,10 @@ class TravelService extends cds.ApplicationService {
         .where({ CustomerID: req.params[0].CustomerID });
     });
 
+    this.on("UpdateVirtualFieldAction", async (req) => {
+      const regex = /\(([^)]+)\)/;
+    });
+
     return super.init();
   }
 }

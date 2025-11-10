@@ -21,6 +21,7 @@
                         <macros:Table metaPath="@com.sap.vocabularies.UI.v1.LineItem" readOnly="true" filterBar="filterBar" id="table" selectionMode="Auto" type="GridTable" selectionChange="onSelectionChange">
                             <macros:actions>
                                 <macrosTable:Action id="idMassAccept" key="MassAccept" text="Remove Selections" enabled="true" press="onRemoveSelections" requiresSelection="true"/>
+                                <macrosTable:Action id="idvirtualField" key="virtualField" text="Update Virtual Field" enabled="true" press="onUpdateVirtualFieldAction" requiresSelection="true"/>
                             </macros:actions>
                             <macros:columns>
                                 <macrosTable:Column id="idAcceptActionColumn" header="Actions" importance="High" key="ValidateAction" width="10em" horizontalAlign="Center" placement="Before" anchor="DataField::Status">

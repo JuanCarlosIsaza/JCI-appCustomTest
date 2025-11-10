@@ -12,6 +12,7 @@ annotate service.Passenger with @(
       Value: Status,
       Label: 'Status',
     },
+    {Value: virtualField},
     {
       $Type: 'UI.DataField',
       Value: CustomerID,

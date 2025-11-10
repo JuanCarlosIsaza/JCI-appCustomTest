@@ -167,14 +167,14 @@ sap.ui.define(
 
                 // Uncaught Error: Unsupported operation: sap.ui.table.Table#clearSelection must not be called if a selection plugin is applied.
                 // at E.clearSelection (Table-dbg.js:3312:10)
-                            // Table.prototype.clearSelection = function() {
-                            //     if (this._hasSelectionPlugin()) {
-                            //         throw new Error("Unsupported operation: sap.ui.table.Table#clearSelection must not be called if a selection plugin is applied.");
-                            //     }
-                        
-                            //     this._getSelectionPlugin().clearSelection();
-                            //     return this;
-                            // };
+                // Table.prototype.clearSelection = function() {
+                //     if (this._hasSelectionPlugin()) {
+                //         throw new Error("Unsupported operation: sap.ui.table.Table#clearSelection must not be called if a selection plugin is applied.");
+                //     }
+
+                //     this._getSelectionPlugin().clearSelection();
+                //     return this;
+                // };
                 // at c.onRemoveSelections (Main.controller.js:166:94)
                 // at PageController.ts:109:54
                 // at m.runWithOwner (ManagedObject-dbg.js:1216:14)
@@ -219,6 +219,84 @@ sap.ui.define(
                 // var oTable = this.getView().byId("onlymainjs::PassengerMain--table-content-innerTable");
                 // console.log(oTable);
 
+            },
+
+            onUpdateVirtualFieldAction: function (oEvent) {
+                const oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+                let sActionName,
+                    mParameters,
+                    sTableId = "idRecognitions",
+                    sCountRowMessage,
+                    sLabel = oResourceBundle.getText("selectRecogToOfferAction"),
+                    aContexts = [],
+                    iRowsSelected;
+
+                const oTable = this.byId(sTableId);
+                aContexts = oTable.getSelectedContexts();
+                iRowsSelected = aContexts.length;
+
+                if (iRowsSelected === 1) {
+                    sCountRowMessage = oResourceBundle.getText("warnSelectingOneItem", [iRowsSelected]);
+                } else if (iRowsSelected > 1) {
+                    sCountRowMessage = oResourceBundle.getText("warnSelectingMultipleItems", [iRowsSelected]);
+                }
+
+                MessageBox.confirm(sCountRowMessage, {
+                    onClose: function (oAction) {
+                        // const sErrorSavingAction = oResourceBundle.getText("errorSavingAction");                        
+                        sActionName = "rrhh.services.vs.core.f103.f103Service.selectRecogToOfferAction";
+                        if (oAction === "OK") {
+                            try {
+                                if (aContexts.length > 0) {
+                                    for (let i = 0; i < aContexts.length; i++) {
+                                        mParameters = {
+                                            contexts: aContexts,
+                                            // model: this.editFlow.getView().getModel(),
+                                            parameterValues: [
+                                                { name: "pIdTipoCkup", value: aContexts[i].getProperty("nmTipoCkupAOfrecer") },
+                                            ],
+                                            label: sLabel,
+                                            invocationGrouping: true
+                                        };
+                                        this.editFlow.invokeAction(sActionName, mParameters).then((response) => {
+
+                                            if (response.length > 0) {
+                                                let sNmTipoCkupAOfrecer = response[0].value.oBinding.oOperation.mParameters.pCkupTypeNameID,
+                                                    sIdTipoCkup = response[0].value.oBinding.oOperation.mParameters.pIdTipoCkup;
+                                                if (sIdTipoCkup !== '01') {
+                                                    debugger;
+                                                    // aContexts[i].setProperty("nmTipoCkupAOfrecer", sNmTipoCkupAOfrecer);
+                                                    // aContexts[i].setProperty("subcentro1", sNmTipoCkupAOfrecer);
+                                                    // aContexts[i].setProperty(aContexts[i].getPath() + "/nmTipoCkupAOfrecer", sNmTipoCkupAOfrecer);
+                                                    aContexts[i].setProperty(aContexts[i].getPath() + "/nmTipoCkupAOfrecer", sNmTipoCkupAOfrecer);
+
+                                                    // // Obtener la fila y la celda directamente en el DOM
+                                                    // let ooTable = sap.ui.getCore().byId("rrhh.services.vs.front.f103.f103::vsFiltroOfreVacMain--idRecognitions-content-innerTable");
+                                                    // let oRows = ooTable.getRows();
+                                                    // let oRow = oRows[i];
+                                                    // if (oRow) {
+                                                    //     let oCells = oRow.getCells();
+                                                    //     let oCell = oCells[12];
+                                                    //     if (oCell && oCell.setValue) {
+                                                    //         oCell.setValue(sNmTipoCkupAOfrecer); // Actualizar el texto de la celda
+                                                    //     }
+                                                    // }
+                                                }
+                                            }
+
+                                        }).catch((error) => {
+                                            debugger;
+                                            MessageBox.error("Error al actualizar nmTipoCkupAOfrecer");
+                                        });
+                                    }
+                                }
+                            } catch (error) {
+
+                            }
+                        } else {
+                        }
+                    }.bind(this)
+                })
             },
         });
     }

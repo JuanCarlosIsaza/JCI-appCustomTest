@@ -72,6 +72,7 @@ annotate schema.Passenger with @title: '{i18n>Passenger}' {
   CountryCode  @title                : '{i18n>Country}'     @Common.Text: CountryCode.name  @Common.TextArrangement: #TextFirst;
   PhoneNumber  @title                : '{i18n>PhoneNumber}';
   EMailAddress @title                : '{i18n>EMailAddress}';
+  virtualField @title                : '{i18n>virtualField}';
 }
 
 annotate schema.Airline with @title: '{i18n>Airline}' {

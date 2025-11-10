@@ -2,7 +2,8 @@ using {sap.fe.cap.travel as my} from '../db/schema';
 
 service TravelService @(path: '/processor') {
 
-  entity Passenger as projection on my.Passenger {
+  entity Passenger as
+    projection on my.Passenger {
       key CustomerID,
           FirstName,
           LastName,
@@ -26,8 +27,9 @@ service TravelService @(path: '/processor') {
               'Sí'
             else
               'No'
-          end as disability : String(2),
-          FlightDateTime
+          end          as disability   : String(2),
+          FlightDateTime,
+          virtualField
     }
     actions {
       @cds.odata.bindingparameter.name: '_it'
@@ -48,5 +50,6 @@ service TravelService @(path: '/processor') {
         '_it/Note'
       ]}
       action CancelTravels(  @(title:'{i18n>Note}')  @(UI.MultiLineText)  pNote : String);
+      action UpdateVirtualFieldAction();
     };
 }
